@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>mselect demo</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="mselect.css">
+	<style>
+		.row {
+			width: 600px;
+		}
+	</style>
+	<script src="mselect.js"></script>
+</head>
+
+<body>
+	<h1>Mselect demo</h1>
+	<p>Works with huge lists also! > 10000 = no problem!</p>
+	<div class="well">
+		<p>
+			Select all items
+			<a href='#' onclick="mselect.selectAllItems();" class="btn btn-success">Fill my garage</a>	
+		</p>
+		<p>
+			Delete all selected items
+			<a href='#' onclick="mselect.reset();" class="btn btn-danger">Reset</a>	
+		</p>
+	</div>
+	
+	<div id="mselect" class="row">		
+		<div class="col-md-6">
+			<h4>(<span id="source-counter">0</span>) Cars Available</h4>
+			<ul class="source"></ul>
+		</div>
+		<div class="col-md-6">
+			<h4>(<span id="dest-counter">0</span>) My Garage</h4>
+			<ul class="dest span6"></ul>
+		</div>		
+	</div>
+	    	    		
+
+	<script>
+		var mselect;
+		
+		var demodata = []; 
+		for(var i=1; i<=15000; i++) {
+			demodata.push({name: 'Car '+i, value: i});				
+		}
+
+		// counter
+		var counter_left  = document.getElementById('source-counter');
+		var counter_right = document.getElementById('dest-counter');
+
+		mselect = new Mselect('mselect', demodata);	
+		mselect.onChange(function(data) {
+			counter_left.innerText = document.querySelector('.source').querySelectorAll(':not([style="display: none;"])').length;
+			counter_right.innerText = data.length;
+		});	
+
+		counter_left.innerText = document.querySelector('.source').querySelectorAll(':not([style="display: none;"])').length;
+		counter_right.innerText = 0;
+
+
+		// preselect item(s)
+		mselect.selectItems([1]);
+	</script>
+
+</body>
+</html>
