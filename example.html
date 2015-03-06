@@ -6,38 +6,95 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="mselect.css">
 	<style>
-		.row {
-			width: 600px;
+		body {
+			padding: 40px;
+			width:1000px;
 		}
+
 	</style>
 	<script src="mselect.js"></script>
 </head>
 
 <body>
-	<h1>Mselect demo</h1>
-	<p>Works with huge lists also! > 10000 = no problem!</p>
-	<div class="well">
-		<p>
-			Select all items
-			<a href='#' onclick="mselect.selectAllItems();" class="btn btn-success">Fill my garage</a>	
-		</p>
-		<p>
-			Delete all selected items
-			<a href='#' onclick="mselect.reset();" class="btn btn-danger">Reset</a>	
-		</p>
-	</div>
-	
-	<div id="mselect" class="row">		
-		<div class="col-md-6">
-			<h4>(<span id="source-counter">0</span>) Cars Available</h4>
-			<ul class="source"></ul>
+	<div class="row">
+		<div class="span12">
+			<h1>Mselect demo</h1>
+			<p>plain javascript written multiselect, which works with huge lists also!</p>
+			<h2>Markup</h2>
+			<code data-lang="html">
+					<pre>
+&lt;div id="mselect" class="row"&gt;
+	&lt;div class="col-md-6"&gt;
+		&lt;h4&gt;(&lt;span id="source-counter"&gt;0&lt;/span&gt;) Cars Available&lt;/h4&gt;
+		&lt;ul class="source"&gt;&lt;/ul&gt;
+	&lt;/div&gt;
+	&lt;div class="col-md-6"&gt;
+		&lt;h4&gt;(&lt;span id="dest-counter"&gt;0&lt;/span&gt;) My Garage&lt;/h4&gt;
+		&lt;ul class="dest span6"&gt;&lt;/ul&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+					</pre>
+			</code>
+			<h2>Code</h2>
+			<code>
+			<pre>
+var data = [
+	{name: "Car 1", value: 1},
+	{name: "Car 2", value: 2},
+	...
+];
+var id = 'my css id';
+
+mselect = new Mselect(id, data);
+mselect.onChange(function(data) {
+	// do something
+});
+			</pre>
+			</code>
 		</div>
-		<div class="col-md-6">
-			<h4>(<span id="dest-counter">0</span>) My Garage</h4>
-			<ul class="dest span6"></ul>
-		</div>		
+		<div class="col-md-5">
+			<div class="panel panel-default">
+				<div class="panel-heading">Select all items</div>
+				<div class="panel-body">
+					<code>mselect.selectAllItems()</code><br/>
+					<a href='#' onclick="mselect.selectAllItems(); return false;" class="btn btn-success">Fill my garage</a>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">Reset all items</div>
+				<div class="panel-body">
+					<code>mselect.reset()</code><br/>
+					<a href='#' onclick="mselect.reset(); return false;" class="btn btn-danger">Reset</a>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">Preselect items</div>
+				<div class="panel-body">
+					<code><p>mselect.selectItems(['value1', ...])</p><p>// example<br/>mselect.selectItems([1]);</p></code><br/>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">Get selected items</div>
+				<div class="panel-body">
+					<code>mselect.getData()</code><br/>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-7">
+
+			<div id="mselect" class="row">
+				<div class="col-md-6">
+					<h4>(<span id="source-counter">0</span>) Cars Available</h4>
+					<ul class="source"></ul>
+				</div>
+				<div class="col-md-6">
+					<h4>(<span id="dest-counter">0</span>) My Garage</h4>
+					<ul class="dest span6"></ul>
+				</div>
+			</div>
+
+		</div>
 	</div>
-	    	    		
 
 	<script>
 		var mselect;

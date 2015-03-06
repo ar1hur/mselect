@@ -65,11 +65,16 @@ var Mselect = (function () {
 		};
 
 
-		var createElement = function(name, value) {
+		var createElement = function(name, value, attr) {
 			if( name === undefined ) {
 				name = value;
 			}
-			return '<li data-value="'+value+'">'+name+'</li>';
+
+			if( attr === undefined ) {
+				attr = '';
+			}
+
+			return '<li '+attr+' data-value="'+value+'">'+name+'</li>';
 		};
 
 
@@ -86,21 +91,24 @@ var Mselect = (function () {
 
 		_self.selectAllItems = function() {
 
-			// TODO
-			console.log(source.children.length);
+			_self.reset();
+			dest.innerHTML = source.innerHTML;
 
-			for(var i = 0; i < source.length; i++) {
-				console.log(source[i]);
-				return;
-				select(e, false);
-			}
+			var html = '';
+			[].map.call(dest.childNodes, function(item) {
+				var value = item.getAttribute('data-value');
+				data.push(value);
+				html  += createElement(item.innerText, value, 'style="display: none;"');
+			});
+
+			source.innerHTML = html;
 			triggerOnChange();
 		};
 
 
 		_self.reset = function() {
 			// faster
-			[].map.call(document.querySelectorAll("[style='display: none;']"),function(item) { 
+			[].map.call(source.querySelectorAll("[style='display: none;']"),function(item) {
 				item.style.display = 'list-item'; 
 			});
 			data = [];
