@@ -1,6 +1,6 @@
 /* 
  * author: Arthur Zielinski 
- * version: 1.01 
+ * version: 1.02 
  */
 
 'use strict';
@@ -78,14 +78,21 @@ var Mselect = (function () {
 		};
 
 
-		_self.selectItems = function(data) {			
+		_self.selectItems = function(data) {		
+			var changestate = false;
+
 			for(var i = 0; i < data.length; i++) {
 				var s = selector(data[i]);
 				var e = source.querySelector(s);
-				select(e, false);
+				if( e !== null ) {
+					select(e, false);
+					changestate = true;
+				}
 			}
 
-			triggerOnChange();
+			if( changestate ) {
+				triggerOnChange();
+			}
 		};
 
 
@@ -140,4 +147,3 @@ var Mselect = (function () {
 })();
 
 	
-
